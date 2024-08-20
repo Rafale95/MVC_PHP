@@ -31,7 +31,11 @@ if(isset($_POST['input_nom']))
     $inter_etud->set_clas(htmlspecialchars($_POST['select_clas']));
     try
     {
-        $etudManager->create($inter_etud);
+        $result = $etudManager->create($inter_etud);
+        if($result == 0)
+        {
+            $_SESSION['error'] = "étudiant créé";
+        }
     }
     catch (DbFailureRequestException $e)
     {

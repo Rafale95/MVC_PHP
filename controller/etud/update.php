@@ -24,7 +24,11 @@ if (isset($_POST['input_nom']) && isset($_GET['id'])) {
     $t_etud->set_Pk($id);
     try
     {
-        $etudManager->update($t_etud);
+        $result = $etudManager->update($t_etud);
+        if($result == 0)
+        {
+            $_SESSION['error'] = "étudiant modifié";
+        }
     }
     catch (DbFailureRequestException $e)
     {

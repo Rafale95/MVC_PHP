@@ -25,7 +25,11 @@ if(isset($_POST['input_ident'])) {
     try
     {
         $clasManager = new clasManager();
-        $clasManager->create($inter_clas);
+        $result = $clasManager->create($inter_clas);
+        if($result == 0)
+        {
+            $_SESSION['error'] = "classe créée";
+        }
     }
     catch (DbFailureRequestException $e)
     {

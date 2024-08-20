@@ -37,7 +37,9 @@ class inscrManager implements CRUD
         SQL;
         $run = $this->pdb->query($query);
         if($run) $entity->set_Pk($this->pdb->lastInsertId());
-        else throw new DbFailureRequestException("Inscription - Erreur d\'insertion en DB", 21);    }
+        else throw new DbFailureRequestException("Inscription - Erreur d\'insertion en DB", 21);
+        return 0;
+    }
 
     public function read(int $id = null, int $etudId = null, int $eprId = null)
     {
@@ -117,7 +119,9 @@ class inscrManager implements CRUD
         catch (PDOException $e)
         {
             throw new DbFailureRequestException("Classe : Erreur de mise à jour en DB", 22);
-        }    }
+        }
+        return 0;
+    }
 
     /**
      * @param int $id

@@ -19,7 +19,6 @@ function validate_password()
     }
 }
 
-//WIP
 /*
 function success_alert()
 {

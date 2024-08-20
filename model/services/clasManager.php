@@ -43,6 +43,7 @@ class clasManager implements CRUD
         {
             throw $e;
         }
+        return 0;
     }
 
     public function read(int $id = null)
@@ -102,6 +103,7 @@ class clasManager implements CRUD
         {
             throw new DbFailureRequestException("Classe : Erreur de mise à jour en DB", 22);
         }
+        return 0;
     }
 
     public function delete(int $id)

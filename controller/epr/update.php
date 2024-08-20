@@ -16,7 +16,11 @@ if (isset($_POST['input_anSco']) && isset($_GET['id'])) {
     $inter_epr->set_Pk($id);
     try
     {
-        $eprManager->update($inter_epr);
+        $result = $eprManager->update($inter_epr);
+        if($result == 0)
+        {
+            $_SESSION['error'] = "épreuve modifiée";
+        }
     }
     catch (DbFailureRequestException $e)
     {

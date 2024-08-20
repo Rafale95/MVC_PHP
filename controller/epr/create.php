@@ -23,7 +23,11 @@ if (isset($_POST['input_dist'])) {
     try
     {
         $eprManager = new eprManager();
-        $eprManager->create($inter_epr);
+        $result = $eprManager->create($inter_epr);
+        if($result == 0)
+        {
+            $_SESSION['error'] = "épreuve créée";
+        }
     }
     catch (DbFailureRequestException $e)
     {

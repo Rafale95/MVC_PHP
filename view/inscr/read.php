@@ -6,6 +6,11 @@ if (isset($_GET['error'])) {
     echo "<script>alert('$error')</script>";
     unset($_GET['error']);
 }
+if (isset($_SESSION['error'])) {
+    $error = htmlspecialchars($_SESSION['error']);
+    echo "<script>alert('$error')</script>";
+    unset($_SESSION['error']);
+}
 ?>
 
 <body class="bg-dark">

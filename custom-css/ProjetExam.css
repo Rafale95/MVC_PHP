@@ -12,4 +12,11 @@
 .custom_body_style
 {
     min-width: 575px !important;
+    witdh: 575px !important;
+}
+#successAlert {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    color: green;
+    font-weight: bold;
 }

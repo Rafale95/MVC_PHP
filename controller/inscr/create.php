@@ -15,7 +15,11 @@ if(isset($_POST['select_epr']))
     try
     {
         $inscrManager = new inscrManager();
-        $inscrManager->create($inter_inscr);
+        $result = $inscrManager->create($inter_inscr);
+        if($result == 0)
+        {
+            $_SESSION['error'] = "inscription créée";
+        }
     }
     catch (DbFailureRequestException $e)
     {

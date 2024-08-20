@@ -27,7 +27,7 @@ class etudManager implements CRUD
 
     /**
      * @param $entity
-     * @return void
+     * @return int
      */
     public function create($entity)
     {
@@ -57,6 +57,7 @@ class etudManager implements CRUD
         {
             throw $e;
         }
+        return 0;
     }
 
     /**
@@ -104,7 +105,7 @@ class etudManager implements CRUD
 
     /**
      * @param $entity
-     * @return void
+     * @return int
      */
     public function update($entity)
     {
@@ -128,6 +129,7 @@ class etudManager implements CRUD
         {
             throw new DbFailureRequestException("Etudiant - Erreur de modification en DB", 21);
         }
+        return 0;
     }
 
     /**

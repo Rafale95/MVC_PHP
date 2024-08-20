@@ -41,6 +41,7 @@ class eprManager implements CRUD
         {
             throw $e;
         }
+        return 0;
 
     }
 
@@ -102,8 +103,7 @@ class eprManager implements CRUD
         } catch (PDOException $e) {
             throw new DbFailureRequestException("Epreuve : Erreur de mise à jour en DB", 23);
         }
-
-
+        return 0;
     }
 
     public function delete(int $id)

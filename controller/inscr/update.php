@@ -31,7 +31,11 @@ if(isset($_POST['input_tStart']))
     $t_inscr->set_Pk($id);
     try
     {
-        $inscrManager->update($t_inscr);
+        $result = $inscrManager->update($t_inscr);
+        if($result == 0)
+        {
+            $_SESSION['error'] = "inscription créée";
+        }
     }
     catch (DbFailureRequestException $e)
     {

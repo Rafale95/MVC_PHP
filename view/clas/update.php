@@ -7,12 +7,6 @@ if (isset($_GET['error'])) {
     echo "<script>alert('$error')</script>";
     unset($_GET['error']);
 }
-
-if (isset($_SESSION['error'])) {
-    $error = htmlspecialchars($_SESSION['error']);
-    echo "<script>alert('$error')</script>";
-    unset($_SESSION['error']);
-}
 ?>
     <body class="bg-dark custom_body_style text-center">
     <?php
@@ -21,7 +15,7 @@ if (isset($_SESSION['error'])) {
     <div>
         <h3 class="text-light fs-2 text-center">Modification de la classe</h3>
     </div>
-    <form method="post" onsubmit="return validateForm()">
+    <form method="post"">
         <div style="margin-top: 2rem;"></div>
         <div class="container w-50" style="border: #0a53be 2px solid; border-radius: 40px">
             <div class="mb-3 row">

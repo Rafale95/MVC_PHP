@@ -26,7 +26,11 @@ if (isset($_POST['input_niv']) && isset($_GET['id'])) {
     $id = common::preg_matchId($_GET['id']);
     $inter_clas->set_Pk($id);
     try {
-        $clasManager->update($inter_clas);
+        $result = $clasManager->update($inter_clas);
+        if($result == 0)
+        {
+            $_SESSION['error'] = "classe modifiée";
+        }
     }
     catch (DbFailureRequestException $e)
     {
