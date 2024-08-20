@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="618e6f21-1eaf-46e3-850a-f7cee5feedcd" name="ProjetExamServer" url="/ProjetEsam">
+        <fileTransfer mountedRoot="C:\wamp64\www\ProjetExam" accessType="MOUNT" port="0" />
+      </webServer>
+    </option>
+  </component>
+</project>

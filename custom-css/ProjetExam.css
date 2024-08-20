@@ -1,0 +1,15 @@
+.btn {
+    cursor: pointer;
+}
+
+.mee
+{
+    color: red;
+    font-style: italic;
+    font-size: larger;
+}
+
+.custom_body_style
+{
+    min-width: 575px !important;
+}
