@@ -20,7 +20,8 @@ include $_SERVER['DOCUMENT_ROOT'].'/ProjetExam/view/insert/menu.php';
 ?>
 <div class=" container text-left bg-light p-4 rounded custom_body_style" style="border: #0a53be 2px solid;">
         <h2 class="mb-4">Liste des Étudiants</h2>
-        <table class="table table-md table-striped">
+    <div class="table-responsive" style="display: flex;">
+    <table class="table table-md table-striped">
             <thead class="thead-light">
             <tr>
                 <th scope = "col">Prénom</th>
@@ -55,6 +56,7 @@ include $_SERVER['DOCUMENT_ROOT'].'/ProjetExam/view/insert/menu.php';
             <!-- Répétez pour chaque étudiant -->
             </tbody>
         </table>
+        </div>
     <a href="/ProjetExam/controller/etud/create.php" class="btn btn-success btn-sm">Ajouter un étudiant</a>
 </div>
 </body>

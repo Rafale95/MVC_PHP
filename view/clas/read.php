@@ -19,8 +19,9 @@ if (isset($_SESSION['error'])) {
 <?php
 include $_SERVER['DOCUMENT_ROOT'].'/ProjetExam/view/insert/menu.php';
 ?>
-<div class=" container text-left bg-light p-4 rounded custom-student-container" style="border: #0a53be 2px solid;">
+<div class=" container text-left bg-light p-4 rounded custom_body_style" style="border: #0a53be 2px solid;">
     <h2 class="mb-4">Liste des Classes</h2>
+    <div class="table-responsive" style="display: flex;">
     <table class="table table-md table-striped">
         <thead class="thead-light">
         <tr>
@@ -51,6 +52,7 @@ include $_SERVER['DOCUMENT_ROOT'].'/ProjetExam/view/insert/menu.php';
         <!-- Répéter pour chaque classe -->
         </tbody>
     </table>
+
     <a href="/ProjetExam/controller/clas/create.php" class="btn btn-success btn-sm">Ajouter une classe</a>
 </div>
 </body>
