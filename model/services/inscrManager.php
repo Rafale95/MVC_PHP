@@ -196,7 +196,7 @@ class inscrManager implements CRUD
         }
     }
 
-    public function readArriv($NoDos, $eprId)
+    public function readArriv($NoDos, $eprId) //méthode read pour la page d'arrivée qui prend en paramètre le numéro de dossard et l'id de l'épreuve afin d'éviter les doublons
     {
         $Tinscr = array();
         $query = <<< SQL

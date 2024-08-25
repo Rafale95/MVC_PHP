@@ -174,26 +174,6 @@ class etudManager implements CRUD
             throw new DbFailureRequestException("Etudiant - Erreur de récupération en DB", 21);
         }
     }
-    /**
-     * @param $ClasName
-     * @return void
-     */
-    public function get_EtudId($Pk)
-    {
-        try{
-            $query = <<< SQL
-                SELECT PkEtud FROM etud left join inscr i on etud.PkEtud = i.FkEtud where PkInscr = '$Pk';
-                SQL;
-            $run = $this->pdb->prepare($query);
-            $run->execute();
-            return $run->fetchAll()[0][0]; // retourne la première colonne de la première ligne de résultat.
-        }
-        catch (PDOException $e)
-        {
-            throw new DbFailureRequestException("Etudiant : Erreur de récupération en DB", 24);
-        }
-    }
-
 
     public function get_EtudName($Pk) // retourne le nom de l'étudiant
     {

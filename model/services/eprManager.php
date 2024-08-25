@@ -126,25 +126,6 @@ class eprManager implements CRUD
             throw $e;
         }
     }
-    /**
-     * @param $ClasName
-     * @return void
-     */
-    public function get_EprId($Pk) // retourne l'id de l'épreuve
-    {
-        try{
-            $query = <<< SQL
-                SELECT PkEpr FROM epr left join inscr i on epr.PkEpr = i.FkEpr where PkInscr = '$Pk';
-                SQL;
-            $run = $this->pdb->prepare($query);
-            $run->execute();
-            return $run->fetchAll()[0][0]; // retourne la première colonne de la première ligne de résultat.
-        }
-        catch (PDOException $e)
-        {
-            throw new DbFailureRequestException("Epreuve : Erreur de récupération en DB", 24);
-        }
-    }
 
     public function  get_EprTstart($Pk = null, $PkInscr = null) // retourne l'heure de début de l'épreuve
     {
