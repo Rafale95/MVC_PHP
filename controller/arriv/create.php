@@ -6,10 +6,9 @@ include_once '../../model/services/inscrManager.php';
 include_once '../../model/services/common.php';
 
 
-if(isset($_POST['input_NoDos']))
+if(isset($_POST['input_tEnd']))
 {
     $t_inscr = new inscr();
-    if(isset($_POST['input_tEnd']))
         if($_POST['input_tEnd'] < $t_inscr->get_tStart())
         {
             $_SESSION['error'] = "le temps de fin ne peut pas être inférieur au temps de début.";
@@ -23,21 +22,20 @@ if(isset($_POST['input_NoDos']))
         header('Location: update.php');
         exit();
     }
-    $t_inscr->set_NoDos(htmlspecialchars($_POST['input_NoDos']));
+    $t_inscr->set_NoDos(htmlspecialchars($_POST['select_NoDos']));
     $t_inscr->set_tEnd(htmlspecialchars($_POST['input_tEnd']));
     $t_inscr->set_rw(htmlspecialchars($_POST['input_rw']));
-    $id = common::preg_matchId($_GET['id']);
-    $t_inscr->set_Pk($id);
+    $eprId = common::preg_matchId($_GET['id']);
     try
     {
         $inscrManager = new inscrManager();
         $EprManager = new eprManager();
-        $eprId = $inscrManager->read($id)[0]->get_eprId();
+        $t_inscr->set_Pk($inscrManager->readArriv($t_inscr->get_NoDos(),$eprId)[0]->get_Pk());
         $t_inscr->set_tStart($EprManager->get_EprTstart($eprId));;
         $result = $inscrManager->update($t_inscr);
         if($result == 0)
         {
-            $_SESSION['error'] = "inscription modifiée";
+            $_SESSION['error'] = "arrivée ajoutée";
         }
     }
     catch (DbFailureRequestException $e)
@@ -46,7 +44,7 @@ if(isset($_POST['input_NoDos']))
         exit();
     }
 
-    header("Location: /ProjetExam/controller/inscr/read.php");
+    header("Location: /ProjetExam/controller/arriv/read.php");
     unset($_GET['id']);
 }
 if (isset($_GET['id'])) {
@@ -54,15 +52,14 @@ if (isset($_GET['id'])) {
     try
     {
         $inscrManager = new inscrManager();
-        $Tinscr = $inscrManager->read($id)[0];
+        $Tinscr = $inscrManager->read(null, null, $id);
     }
     catch (DbFailureRequestException $e)
     {
         header('Location: ../home/main.php?error=' . urlencode($e->getMessage()));
         exit();
     }
-    include '../../view/inscr/update.php';
+    include '../../view/arriv/create.php';
 } else {
-    header("Location: /ProjetExam/controller/etud/read.php");
+    header("Location: /ProjetExam/controller/arriv/read.php");
 }
-

@@ -59,8 +59,8 @@ include $_SERVER['DOCUMENT_ROOT'].'/ProjetExam/view/insert/menu.php';
                     <td><?=$t_inscr->get_tEnd()?></td>
                     <td><?=$t_inscr->get_temps()?></td>
                     <td>
-                        <a href="/ProjetExam/controller/inscr/update.php?id=class<?=$t_inscr->get_pk()?>" class="btn btn-primary btn-sm">Modifier</a>
-                        <a href="/ProjetExam/controller/inscr/delete.php?id=<?=$t_inscr->get_pk()?>" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette inscription ?');">Supprimer</a>
+                        <a href="/ProjetExam/controller/inscr/update.php?id=inscr<?=$t_inscr->get_Pk()?>" class="btn btn-primary btn-sm">Modifier</a>
+                        <a href="/ProjetExam/controller/inscr/delete.php?id=<?=$t_inscr->get_Pk()?>" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette inscription ?');">Supprimer</a>
                     </td>
                 </tr>
                 <?php

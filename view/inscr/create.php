@@ -18,7 +18,7 @@ if (isset($_SESSION['error'])) {
     include $_SERVER['DOCUMENT_ROOT'].'/ProjetExam/view/insert/menu.php';
     ?>
     <div>
-        <h3 class="text-light fs-2 text-center">Création de l'étudiant</h3>
+        <h3 class="text-light fs-2 text-center">Création de l'inscription</h3>
     </div>
     <form method="post">
         <div style="margin-top: 2rem;"></div>
@@ -30,25 +30,29 @@ if (isset($_SESSION['error'])) {
                     <input type="text" readonly class="form-control" id="input_nom" name="input_nom" value="<?=$NoDos?>">
                 </div>
             </div>
+            <div class="mb-3 row">
             <label for="select_epr" class="text-light col-sm-3 col-form-label">Épreuve</label>
-            <div class="col-sm-7">
-                <select class="form-control" name="select_epr" id="select_epr">
-                    <?php for($x = 0 ; $x < count($TEpr); $x++) { ?>
-                        <option value="<?= htmlspecialchars($TEpr[$x]["AnSco"]) ?>">
-                            <?= htmlspecialchars($TEpr[$x]["AnSco"])?> <?= htmlspecialchars($TEpr[$x]["Date"])?>
-                        </option>
-                    <?php } ?>
-                </select>
+                <div class="col-sm-7">
+                    <select class="form-control" name="select_epr" id="select_epr">
+                        <?php for($x = 0 ; $x < count($TEpr); $x++) { ?>
+                            <option value="<?= htmlspecialchars($TEpr[$x]->get_Pk())?>">
+                                <?= htmlspecialchars($TEpr[$x]->get_anSco())?> <?= htmlspecialchars($TEpr[$x]->get_date())?>
+                            </option>
+                        <?php } ?>
+                    </select>
+                </div>
             </div>
-            <label for="select_etud" class="text-light col-sm-3 col-form-label">Étudiant</label>
-            <div class="col-sm-7">
-                <select class="form-control" name="select_etud" id="select_etud">
-                    <?php for($x = 0 ; $x < count($TEtud); $x++) { ?>
-                        <option value="<?= htmlspecialchars($TEtud[$x]["Nom"]) ?>">
-                            <?= htmlspecialchars($TEtud[$x]["Nom"])?> <?= htmlspecialchars($TEpr[$x]["Pren"])?>
-                        </option>
-                    <?php } ?>
-                </select>
+            <div class="mb-3 row">
+                <label for="select_etud" class="text-light col-sm-3 col-form-label">Étudiant</label>
+                <div class="col-sm-7">
+                    <select class="form-control" name="select_etud" id="select_etud">
+                        <?php for($x = 0 ; $x < count($TEtud); $x++) { ?>
+                            <option value="<?= htmlspecialchars($TEtud[$x]->get_Pk()) ?>">
+                                <?= htmlspecialchars($TEtud[$x]->get_nom())?> <?= htmlspecialchars($TEtud[$x]->get_pren())?>
+                            </option>
+                        <?php } ?>
+                    </select>
+                </div>
             </div>
             <p></p>
             <div style="text-align:center; margin-top: 1rem;">

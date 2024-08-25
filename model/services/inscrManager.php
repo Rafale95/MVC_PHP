@@ -6,7 +6,7 @@ use ProjetExam\Exception\UnexpectedClassException;
 include_once('../../model/inscr.php');
 include_once ('dbManager.php');
 include_once ('CRUD.php');
-include_once ('../../exception/DeleteStudentWithInscrException.php');
+include_once ('../../exception/DeleteInscrWithTEndException.php');
 include_once ('etudManager.php');
 include_once ('eprManager.php');
 
@@ -24,16 +24,20 @@ class inscrManager implements CRUD
             throw new UnexpectedClassException(inscr::class, get_class($entity));
         $etudManager = new etudManager();
         $eprManager = new eprManager();
-        $etud = (int) $etudManager->get_EtudId($entity->get_etudId());
-        $epr = (int) $eprManager->get_EprId($entity->get_eprId());
-        $tStart = $eprManager->get_EprTStart($epr);
+        $etud = (int) $entity->get_etudId();
+        $epr = (int) $entity->get_eprId();
+        $tStart = $entity->get_tStart();
         $NoDos = $entity->get_NoDos();
         $runWalk = $entity->get_rw();
         $temps = $entity->get_temps();
         $tEnd = $entity->get_Tend();
+        $tStart = $tStart ? "'$tStart'" : 'NULL';
+        $tEnd = $tEnd ? "'$tEnd'" : 'NULL';
+        $temps = $temps ? "'$temps'" : 'NULL';
+
         $query = <<< SQL
             INSERT INTO inscr
-            VALUES (null,'$epr','$etud','$NoDos','$runWalk','$tStart','$tEnd','$temps');
+            VALUES (null, '$etud', '$epr', '$NoDos', '$runWalk', $tStart, $tEnd, $temps);
         SQL;
         $run = $this->pdb->query($query);
         if($run) $entity->set_Pk($this->pdb->lastInsertId());
@@ -83,10 +87,10 @@ class inscrManager implements CRUD
                 $t_inscr->set_etudId($row['FkEtud']);
                 $t_inscr->set_eprId($row['FkEpr']);
                 $t_inscr->set_NoDos($row['NoDos']);
+                $t_inscr->set_tEnd($row['Tend']);
                 $t_inscr->set_rw($row['Rw']);
                 $t_inscr->set_tStart($row['Tstart']);
-                $t_inscr->set_tEnd($row['Tend']);
-                $t_inscr->set_temps($row['Temps']);
+                $t_inscr->set_temps();
                 $Tinscr[] = $t_inscr;
             }
             return $Tinscr;
@@ -138,7 +142,7 @@ class inscrManager implements CRUD
             $run = $this->pdb->prepare($query);
             $run->execute();
             $result = $run->fetch();
-            if($result['Tend'] !== null)
+            if($result['Tend'] != null && $result['Tend'] != '00:00:00')
                 throw new DeleteInscrWithTEndException();
             $query = <<< SQL
             DELETE FROM inscr WHERE PkInscr='$id';
@@ -189,6 +193,37 @@ class inscrManager implements CRUD
         catch (PDOException $e)
         {
             echo "<br> Erreur de récupération depuis la base de données";
+        }
+    }
+
+    public function readArriv($NoDos, $eprId)
+    {
+        $Tinscr = array();
+        $query = <<< SQL
+        SELECT * FROM inscr WHERE NoDos = '$NoDos' AND FkEpr = '$eprId';
+        SQL;
+        try{
+            $run = $this->pdb->prepare($query);
+            $run->execute();
+            $result = $run->fetchAll();
+            foreach ($result as $row)
+            {
+                $t_inscr = new inscr();
+                $t_inscr->set_Pk($row['PkInscr']);
+                $t_inscr->set_etudId($row['FkEtud']);
+                $t_inscr->set_eprId($row['FkEpr']);
+                $t_inscr->set_NoDos($row['NoDos']);
+                $t_inscr->set_rw($row['Rw']);
+                $t_inscr->set_tStart($row['Tstart']);
+                $t_inscr->set_tEnd($row['Tend']);
+                $t_inscr->set_temps();
+                $Tinscr[] = $t_inscr;
+            }
+            return $Tinscr;
+        }
+        catch (PDOException $e)
+        {
+            throw new DbFailureRequestException("Inscription - Erreur de lecture en DB", 21);
         }
     }
 

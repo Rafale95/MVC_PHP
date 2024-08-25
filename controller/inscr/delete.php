@@ -9,6 +9,8 @@ use ProjetExam\Exception\DeleteInscrWithTEndException;
 
 try {
     $inter_inscrM = new inscrManager();
+    $inter_eprM = new eprManager();
+    $inter_etudM = new etudManager();
     if(isset($_GET['id']))
     {
         $id = common::preg_matchId($_GET['id']);
@@ -23,4 +25,4 @@ catch (DeleteInscrWithTEndException | DbFailureRequestException $e)
     exit;
 }
 
-include '../../view/etud/read.php';
+include '../../view/inscr/read.php';

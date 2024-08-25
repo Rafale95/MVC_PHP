@@ -19,6 +19,9 @@
                     <a class="nav-link text-light" href="/ProjetExam/controller/clas/read.php">Classes</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link text-light" href="/ProjetExam/controller/arriv/read.php">Arrivées</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link text-light" href="/ProjetExam/controller/home/quitter.php" onclick="return confirm('Quitter l\'application?')">Quitter</a>
                 </li>
             </ul>

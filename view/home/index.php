@@ -1,5 +1,5 @@
 <?php
-    $title = "Gestion de commerces - Login";
+    $title = "Gestion d'épreuves scolaires - Login";
     include $_SERVER['DOCUMENT_ROOT'].'/ProjetExam/view/insert/header.php';
 ?>
     <body class="bg-dark text-center">

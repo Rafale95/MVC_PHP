@@ -9,9 +9,10 @@ try
 {
     if(isset($_GET['id']))
     {
-        $inter_inscrdM = new inscrManager();
-        $id = common::preg_matchId($_GET['id']);
-        $TInscr = $inter_inscrdM->read(null, $id);
+        $inter_inscrM = new inscrManager();
+        $inter_eprM = new eprManager();
+        $inter_etudM = new etudManager();        $id = common::preg_matchId($_GET['id']);
+        $TInscr = $inter_inscrM->read(null, $id);
     }
     else header("Location: /ProjetExam/controller/etud/read.php");
 
@@ -21,4 +22,4 @@ catch (DbFailureRequestException $e)
     header('Location: ../home/main.php?error=' . urlencode($e->getMessage()));
     exit();
 }
-include '../../view/inscr/read.php';
+include '../../view/inscr/readEtud.php';

@@ -229,4 +229,17 @@ class etudManager implements CRUD
         }
     }
 
+    public function get_countEtudDB() // retourne le nombre d'étudiant
+    {
+        $query = <<< SQL
+        SELECT Count(*) FROM etud;
+        SQL;
+        try {
+            $run = $this->pdb->prepare($query);
+            $run->execute();
+            return $run->fetch()[0];
+        } catch (PDOException $e) {
+            throw new DbFailureRequestException("Etudiant - Erreur de récupération en DB", 21);
+        }
+    }
 }

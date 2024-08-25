@@ -6,11 +6,11 @@ include_once '../../model/services/inscrManager.php';
 
 try
 {
-    $inter_inscrdM = new inscrManager();
+    $inter_inscrM = new inscrManager();
     $inter_eprM = new eprManager();
     $inter_etudM = new etudManager();
     $etud = new etud();
-    $TInscr = $inter_inscrdM->read();
+    $TInscr = $inter_inscrM->read();
 }
 catch (DbFailureRequestException $e)
 {

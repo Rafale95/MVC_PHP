@@ -90,13 +90,13 @@ class inscr
 
     public function set_temps()
     {
-        if($this->get_tEnd() == null)
-            $this->temps = null;
+        if($this->get_tEnd() == NULL)
+            $this->temps = NULL;
         else
         {
             $tEnd = new DateTime($this->get_tEnd());
             $tStart = new DateTime($this->get_tStart());
-            $t_temps = $tStart->diff($tEnd);
+            $t_temps = $tStart->diff($tEnd)->format('%H:%I:%S');
             $this->temps = $t_temps;
         }
     }

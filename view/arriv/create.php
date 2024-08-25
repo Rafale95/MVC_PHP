@@ -1,5 +1,5 @@
 <?php
-$title = "Modification de l'inscription";
+$title = "Arrivée";
 include $_SERVER['DOCUMENT_ROOT'].'/ProjetExam/view/insert/header.php';
 
 if (isset($_GET['error'])) {
@@ -19,30 +19,35 @@ if (isset($_SESSION['error'])) {
     include $_SERVER['DOCUMENT_ROOT'].'/ProjetExam/view/insert/menu.php';
     ?>
     <div>
-        <h3 class="text-light fs-2 text-center">Modification de l'inscription</h3>
+        <h3 class="text-light fs-2 text-center">Ajout d'une arrivée</h3>
     </div>
     <form method="post">
         <div style="margin-top: 2rem;"></div>
         <div class="container w-50" style="border: #0a53be 2px solid; border-radius: 40px">
             <div class="mb-3 row">
-                <p style="margin-top: 1rem"></p>
-                <label for="input_NoDos" class="text-light col-sm-3 col-form-label">Numéro Dossier</label>
+                <label for="select_NoDos" class="text-light col-sm-3 col-form-label">Numéro Dossier</label>
                 <div class="col-sm-7">
-                    <input type="text" class="form-control" id="input_NoDos" name="input_NoDos" value="<?= $Tinscr->get_NoDos()?>">
+                    <select class="form-control" name="select_NoDos" id="select_NoDos">
+                        <?php for($x = 0 ; $x < count($Tinscr); $x++) { ?>
+                            <option value="<?= htmlspecialchars($Tinscr[$x]->get_NoDos()) ?>">
+                                <?= htmlspecialchars($Tinscr[$x]->get_NoDos()) ?>
+                            </option>
+                        <?php } ?>
+                    </select>
                 </div>
             </div>
             <div class="mb-3 row">
                 <p style="margin-top: 1rem"></p>
                 <label for="input_tEnd" class="text-light col-sm-3 col-form-label">Heure d'arrivée</label>
                 <div class="col-sm-7">
-                    <input type="time" class="form-control" id="input_tEnd" name="input_tEnd" value="<?= $Tinscr->get_tEnd()?>">
+                    <input type="time" class="form-control" id="input_tEnd" name="input_tEnd">
                 </div>
             </div>
             <div class="mb-3 row">
                 <p style="margin-top: 1rem"></p>
                 <label for="input_rw" class="text-light col-sm-3 col-form-label">Pourcentage Run/Walk</label>
                 <div class="col-sm-7">
-                    <input type=number min="0" max="100" class="form-control" id="input_rw" name="input_rw" value="<?= $Tinscr->get_rw()?>"> %
+                    <input type=number min="0" max="100" class="form-control" id="input_rw" name="input_rw"> %
                 </div>
             </div>
             <p></p>
