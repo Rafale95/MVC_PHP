@@ -7,7 +7,7 @@ include_once '../../model/services/etudManager.php';
 try
 {
     $etudManager = new etudManager();
-    $TClas = $etudManager->clasManager->get_ClasNames();
+    $TEtab = $etudManager->clasManager->get_ClasNames();
 }
 catch (DbFailureRequestException $e)
 {
@@ -29,6 +29,8 @@ if(isset($_POST['input_nom']))
     $inter_etud->set_pren(htmlspecialchars($_POST['input_pren']));
     $inter_etud->set_sexe(htmlspecialchars($_POST['select_sexe']));
     $inter_etud->set_clas(htmlspecialchars($_POST['select_clas']));
+    $inter_etud->set_user(htmlspecialchars($_POST['select_user']));
+
     try
     {
         $result = $etudManager->create($inter_etud);

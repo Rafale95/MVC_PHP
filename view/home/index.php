@@ -32,15 +32,9 @@
                 <button type="reset" class="btn btn-secondary ">Annuler</button>
                 <p></p>
             </div>
-            <?php
-            if(isset($registerenabled) && $registerenabled == true) {
-                ?>
-                <div>
-                    <a href="/ProjetExam/controller/user/createAdmin.php" class="btn btn-primary">S'inscrire</a>
-                </div>
-                <?php
-            }
-            ?>
+            <div>
+                <a href="/ProjetExam/controller/user/createAdmin.php" class="btn btn-primary">créer compte</a>
+            </div>
             <p></p>
         </div>
     </form>

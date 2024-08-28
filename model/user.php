@@ -45,6 +45,26 @@ class user
         unset($this->pswd);
     }
 
+    public function set_admin($t_admin)
+    {
+        $this->admin = $t_admin;
+    }
+
+    public function get_admin()
+    {
+        return $this->admin;
+    }
+
+    public function set_Pk($t_pk)
+    {
+        $this->pk = $t_pk;
+    }
+
+    public function get_Pk()
+    {
+        return $this->pk;
+    }
+
     /**
      * @param $t_login
      * @return void

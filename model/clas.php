@@ -52,11 +52,6 @@ class clas
         $this->nbEtud = $t_nbEtud;
     }
 
-    public function get_nbEtud()
-    {
-        return $this->nbEtud;
-    }
-
     public function set_Pk($t_Pk)
     {
         $this->Pk = $t_Pk;
@@ -65,5 +60,15 @@ class clas
     public function get_Pk()
     {
         return $this->Pk;
+    }
+
+    public function get_etab()
+    {
+        return $this->etab;
+    }
+
+    public function set_etab($t_etab)
+    {
+        $this->etab = $t_etab;
     }
 }

@@ -1,4 +1,16 @@
 <?php
+
+use ProjetExam\Exception\DbFailureRequestException;
+
+include_once ('../../exception/DbFailureRequestException.php');
+include_once ('../../exception/DeleteInscrWithTEndException.php');
+include_once ('../../exception/DeleteClassWithStudentsException.php');
+include_once ('../../exception/DeleteStudentWithInscrException.php');
+include_once ('../../exception/DeleteEprWithInscrException.php');
+include_once ('../../exception/UnexpectedClassException.php');
+
+
+
 include_once('../../model/user.php');
 include_once ('dbManager.php');
 
@@ -22,7 +34,8 @@ class userManager
         {
             $login = $t_user->get_login();
             $pswd = password_hash($t_user->get_pswd(), PASSWORD_DEFAULT);
-            $query = "INSERT INTO user (login, pswd) VALUES ('$login', '$pswd')";
+            $Admin = $t_user->get_admin();
+            $query = "INSERT INTO user (Login, Pswd, Admin) VALUES ('$login', '$pswd', '$Admin')";
             $run = $this->pDB->prepare($query);
             $run->execute();
         }
@@ -54,11 +67,37 @@ class userManager
         foreach ($result as $row)
         {
             $t_user = new user();
-            $t_user->set_login($row['login']);
-            $t_user->set_pswd($row['pswd']);
+            $t_user->set_login($row['Login']);
+            $t_user->set_pswd($row['Pswd']);
+            $t_user->set_admin($row['Admin']);
             $Tuser[] = $t_user;
         }
         return $Tuser;
+    }
+
+    public function update($entity)
+    {
+        if(!$entity instanceof user)
+            throw new UnexpectedValueException(user::class, get_class($entity));
+        $etudManager = new etudManager();
+        $login = $entity->get_login();
+        $pswd = password_hash($entity->get_pswd(), PASSWORD_DEFAULT);
+        $admin = $entity->get_admin();
+        $PkUser = $entity->get_Pk();
+
+        $query = <<< SQL
+            UPDATE user SET Login = '$login', Pswd = '$pswd', Admin = '$admin' 
+            WHERE PkUser = '$PkUser';
+        SQL;
+        try{
+            $run = $this->pdb->prepare($query);
+            $run->execute();
+        }
+        catch (PDOException $e)
+        {
+            throw new DbFailureRequestException("Classe : Erreur de mise à jour en DB", 22);
+        }
+        return 0;
     }
 
     /**
@@ -76,5 +115,56 @@ class userManager
         if(count($result))
             if(password_verify($pswd, $result[0]['Pswd'])) return true;
         return false;
+    }
+
+    public function checkAdmin($login, $pswd)
+    {
+        $query = "SELECT * FROM user WHERE login='$login' and Pswd='$pswd' and Admin = 1";
+        $run = $this->pDB->prepare($query);
+        $run->execute();
+        $result = $run->fetchAll();
+        if(count($result))
+            return true;
+        return false;
+    }
+
+    public function get_admin()
+    {
+        $query = "SELECT * FROM user WHERE Admin = 1";
+        $run = $this->pDB->prepare($query);
+        $run->execute();
+        $result = $run->fetchAll();
+        $Tuser = array();
+        foreach ($result as $row)
+        {
+            $t_user = new user();
+            $t_user->set_login($row['Login']);
+            $t_user->set_pswd($row['Pswd']);
+            $t_user->set_admin($row['Admin']);
+            $Tuser[] = $t_user;
+        }
+        return $Tuser;
+    }
+
+    public function get_UserId($Login = null, $Pk = null)
+    {
+
+        try{
+            if($Pk == null)
+                $query = <<< SQL
+                SELECT PkUser FROM user left join etud e on user.PkUser = e.FkUser where Login = '$Login';
+                SQL;
+            else
+                $query = <<< SQL
+                SELECT PkUser FROM user left join etud e on user.PkUser = e.FkUser where PkEtud = '$Pk';
+                SQL;
+            $run = $this->pdb->prepare($query);
+            $run->execute();
+            return $run->fetchAll()[0][0]; // retourne la première colonne de la première ligne de résultat.
+        }
+        catch (PDOException $e)
+        {
+            throw new DbFailureRequestException("User : Erreur de récupération en DB", 24);
+        }
     }
 }

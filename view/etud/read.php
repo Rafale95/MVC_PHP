@@ -46,8 +46,10 @@ include $_SERVER['DOCUMENT_ROOT'].'/ProjetExam/view/insert/menu.php';
                 <td><?=$t_etud->get_nbInscr()?></td>
                 <td>
                     <a href="/ProjetExam/controller/inscr/readEtud.php?id=student<?=$t_etud->get_Pk()?>" class="btn btn-info btn-sm">Inscriptions</a>
+                    <?php if($_SESSION['LogAdmin'] = 1 ) { ?>
                     <a href="/ProjetExam/controller/etud/update.php?id=student<?=$t_etud->get_pk()?>" class="btn btn-primary btn-sm">Modifier</a>
                     <a href="/ProjetExam/controller/etud/delete.php?id=<?=$t_etud->get_pk()?>" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet étudiant ?');">Supprimer</a>
+                    <?php } ?>
                 </td>
             </tr>
             <?php

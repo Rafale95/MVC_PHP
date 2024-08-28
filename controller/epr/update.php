@@ -8,7 +8,7 @@ include_once '../../model/services/common.php';
 $eprManager = new eprManager();
 if (isset($_POST['input_anSco']) && isset($_GET['id'])) {
     $inter_epr = new epr();
-    $inter_epr->set_anSco(htmlspecialchars($_POST['input_anSco']));
+    $inter_epr->set_anSco($eprManager->get_anScoDB());
     $inter_epr->set_Date(htmlspecialchars($_POST['input_date']));
     $inter_epr->set_tStart(htmlspecialchars($_POST['input_tStart']));
     $inter_epr->set_dist(htmlspecialchars($_POST['input_dist']));

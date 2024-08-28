@@ -18,8 +18,13 @@
                 <li class="nav-item">
                     <a class="nav-link text-light" href="/ProjetExam/controller/clas/read.php">Classes</a>
                 </li>
+                <?php if($_SESSION['LogAdmin'] = 1 ) { ?>
                 <li class="nav-item">
                     <a class="nav-link text-light" href="/ProjetExam/controller/arriv/read.php">Arrivées</a>
+                </li>
+                <?php } ?>
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="/ProjetExam/controller/user/read.php">utilisateurs</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-light" href="/ProjetExam/controller/home/quitter.php" onclick="return confirm('Quitter l\'application?')">Quitter</a>

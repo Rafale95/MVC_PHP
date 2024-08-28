@@ -248,4 +248,21 @@ class eprManager implements CRUD
             echo "<br> Erreur de récupération depuis la base de données";
         }
     }
+
+    public function get_anScoDB() // retourne l'année scolaire depuis la table etab afin d'éviter la création d'une nouvelle instance de la classe etab
+    {
+        $query = <<< SQL
+        SELECT AnSco FROM etab
+        SQL;
+        try{
+            $run = $this->pdb->prepare($query);
+            $run->execute();
+            return $run->fetch()[0][0];
+        }
+        catch (PDOException $e)
+        {
+            echo "<br> Erreur de récupération depuis la base de données";
+        }
+
+    }
 }

@@ -33,8 +33,10 @@ class etudManager implements CRUD
     {
         if(!$entity instanceof etud)
             throw new UnexpectedClassException(etud::class, get_class($entity));
+        $userManager = new userManager();
 
         $clas = (int) $this->clasManager->get_ClasId($entity->get_clas());
+        $user = (int) $userManager->get_userId($entity->get_user());
         $nom = $entity->get_nom();
         $pren = $entity->get_pren();
         $sexe = $entity->get_sexe();
@@ -43,7 +45,7 @@ class etudManager implements CRUD
         {
             $query = <<< SQL
             INSERT INTO etud
-            VALUES (null,'$clas','$nom','$pren','$sexe','$nbInscr');
+            VALUES (null,'$clas','$nom','$pren','$sexe','$nbInscr', '$user');
             SQL;
             $run = $this->pdb->query($query);
             if($run) $entity->set_Pk($this->pdb->lastInsertId());
@@ -64,7 +66,7 @@ class etudManager implements CRUD
      * @param int|null $id
      * @return array|void
      */
-    public function read (int $id = null)
+    public function read (int $id = null, string $User = null)
     {
         $Tuser = array();
         if($id !== null) // check si l'id n'est pas null et bien un entier
@@ -78,6 +80,26 @@ class etudManager implements CRUD
             $query = <<< SQL
                 SELECT * FROM etud;
             SQL;
+        }
+        switch (true)
+        {
+            case $id !== null:
+                $query = <<< SQL
+                SELECT * FROM etud WHERE PkEtud='$id';
+            SQL;
+                break;
+
+            case $User !== null:
+                $query = <<< SQL
+            SELECT * FROM etud left join user on user.PkUser = etud.FkUser WHERE user.Login='$User';
+            SQL;
+                break;
+
+            default:
+                $query = <<< SQL
+                SELECT * FROM etud;
+            SQL;
+                break;
         }
         try{
             $run = $this->pdb->prepare($query);
@@ -93,6 +115,7 @@ class etudManager implements CRUD
                 $t_user->set_sexe($row['Sexe']);
                 $t_user->set_nbInscr($inscrManager->get_NbInscrByEtudDB($row['PkEtud']));
                 $t_user->set_clas($this->clasManager->get_ClasName($row['FkClas']));
+                $t_user->set_user($row['FkUser']);
                 $Tuser[] = $t_user;
             }
             return $Tuser;

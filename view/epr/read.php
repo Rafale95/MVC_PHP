@@ -45,11 +45,13 @@ include $_SERVER['DOCUMENT_ROOT'].'/ProjetExam/view/insert/menu.php';
                 <td><?=$t_epr->get_tStart()?></td>
                 <td><?=$t_epr->get_dist()?></td>
                 <td><?=$t_epr->get_nbPart()?></td>
+                <?php if($_SESSION['LogAdmin'] = 1 ) { ?>
                 <td>
                     <a href="/ProjetExam/controller/inscr/readEpr.php?id=challenge<?=$t_epr->get_Pk()?>" class="btn btn-info btn-sm">Inscriptions</a>
                     <a href="/ProjetExam/controller/epr/update.php?id=challenge<?=$t_epr->get_Pk()?>" class="btn btn-primary btn-sm">Modifier</a>
                     <a href="/ProjetExam/controller/epr/delete.php?id=<?=$t_epr->get_Pk()?>" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette épreuve ?');">Supprimer</a>
                 </td>
+                <?php } ?>
             </tr>
             <?php
         }

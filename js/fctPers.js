@@ -18,19 +18,3 @@ function validate_password()
         document.getElementById('submit').style.opacity = (1);
     }
 }
-
-/*
-function success_alert()
-{
-    if (document.getElementById('input_passwordCreate').value != "" && document.getElementById('input_confirmPasswordCreate').value != "")
-    {
-        //fade effect
-        document.getElementById('successAlert').style.opacity = 1;
-        setTimeout(function()
-        {
-            document.getElementById('successAlert').style.opacity = 0;
-        }
-        , 500);
-    }
-}
-*/

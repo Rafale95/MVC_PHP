@@ -6,7 +6,10 @@ include_once '../../model/services/etudManager.php';
 try
 {
     $inter_etudM = new etudManager();
-    $TEtud = $inter_etudM->read();
+    if($_SESSION['LogAdmin'] = 1)
+        $TEtud = $inter_etudM->read();
+    else
+        $TEtud = $inter_etudM->read(null, $_SESSION['User']);
 }
 catch (DbFailureRequestException $e)
 {

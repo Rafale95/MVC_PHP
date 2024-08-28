@@ -58,6 +58,18 @@ if (isset($_SESSION['error'])) {
                     </select>
                 </div>
             </div>
+            <div class="mb-3 row">
+                <label for="select_user" class="text-light col-sm-3 col-form-label">User</label>
+                <div class="col-sm-7">
+                    <select class="form-control" name="select_user" id="select_user">
+                        <?php for($x = 0 ; $x < count($TUser); $x++) { ?>
+                            <option value="<?= htmlspecialchars($TUser[$x]["Login"]) ?>">
+                                <?= htmlspecialchars($TUser[$x]["Login"]) ?>
+                            </option>
+                        <?php } ?>
+                    </select>
+                </div>
+            </div>
             <p></p>
             <div style="text-align:center; margin-top: 1rem;">
                 <button type="submit" class="btn btn-primary mx-2" id="submit">Valider</button>

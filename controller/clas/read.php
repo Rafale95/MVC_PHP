@@ -7,7 +7,11 @@ include_once '../../model/services/clasManager.php';
 try
 {
     $inter_clasM = new clasManager();
-    $TClas = $inter_clasM->read();
+    if($_SESSION['LogAdmin'] = 1)
+        $TClas = $inter_clasM->read();
+    else
+        $TClas = $inter_clasM->read($_SESSION['User']);
+
 }
 catch (DbFailureRequestException $e)
 {

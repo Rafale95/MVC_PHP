@@ -15,7 +15,6 @@ if (isset($_POST['input_dist'])) {
     }
 
     $inter_epr = new epr();
-    $inter_epr->set_anSco(htmlspecialchars($_POST['input_anSco']));
     $inter_epr->set_Date(htmlspecialchars($_POST['input_date']));
     $inter_epr->set_tStart(htmlspecialchars($_POST['input_tStart']));
     $inter_epr->set_dist(htmlspecialchars($_POST['input_dist']));
@@ -23,6 +22,7 @@ if (isset($_POST['input_dist'])) {
     try
     {
         $eprManager = new eprManager();
+        $inter_epr->set_anSco($eprManager->get_anScoDB());
         $result = $eprManager->create($inter_epr);
         if($result == 0)
         {

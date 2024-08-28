@@ -41,10 +41,12 @@ include $_SERVER['DOCUMENT_ROOT'].'/ProjetExam/view/insert/menu.php';
                 <td><?=$t_clas->get_niv()?></td>
                 <td><?=$t_clas->get_ident()?></td>
                 <td><?=$t_clas->get_nbEtud()?></td>
+                <?php if($_SESSION['LogAdmin'] = 1 ) { ?>
                 <td>
                     <a href="/ProjetExam/controller/clas/update.php?id=class<?=$t_clas->get_pk()?>" class="btn btn-primary btn-sm">Modifier</a>
                     <a href="/ProjetExam/controller/clas/delete.php?id=<?=$t_clas->get_pk()?>" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette classe ?');">Supprimer</a>
                 </td>
+                <?php } ?>
             </tr>
             <?php
         }

@@ -1,11 +1,12 @@
 <?php
 
-use ProjetExam\Exception\DbFailureRequestException;
+use ProjetExam\exception\DbFailureRequestException;
 use ProjetExam\exception\DeleteClassWithStudentsException;
 
 include_once ('../../model/clas.php');
 include_once ('dbManager.php');
 include_once ('etudManager.php');
+
 include_once ('CRUD.php');
 
  // Import the exception class
@@ -15,6 +16,7 @@ class clasManager implements CRUD
     public function  __construct()
     {
         $this->pdb = dbManager::get_instance();
+        $this->etabManager = new etabManager();
     }
 
 
@@ -23,13 +25,15 @@ class clasManager implements CRUD
     {
         if(!$entity instanceof clas) //sécu pour éviter une erreur de type de la part du dev
             throw new UnexpectedValueException(clas::class, get_class($entity));
+
+        $etab = (int) $this->etabManager->get_etabId($entity->get_etab());
         $niv = $entity->get_niv();
         $ident = $entity->get_ident();
         $nbEtud = 0;
         try {
             $query = <<< SQL
                 INSERT INTO clas
-                VALUES (null, '$niv', '$ident', '$nbEtud');
+                VALUES (null, '$niv', '$ident', '$nbEtud', '$etab');
             SQL;
             $run = $this->pdb->query($query);
             if($run) $entity->set_Pk($this->pdb->lastInsertId());
@@ -46,18 +50,30 @@ class clasManager implements CRUD
         return 0;
     }
 
-    public function read(int $id = null)
+    public function read(int $id = null, string $etud = null)
     {
-        $Tclas = array();
-        if($id !== null) // check si l'id n'est pas null et bien un entier
-            $query = <<< SQL
+        $TClas = array();
+        switch (true)
+        {
+            case $id !== null:
+                $query = <<< SQL
                 SELECT * FROM clas WHERE PkClas='$id';
-                SQL;
+            SQL;
+                break;
 
-        else
-            $query = <<< SQL
+            case $etud !== null:
+                $query = <<< SQL
+            SELECT * FROM clas WHERE PkClas IN
+                SELECT FkClas FROM etud WHERE FkClas='$etud';
+            SQL;
+                break;
+
+            default:
+                $query = <<< SQL
                 SELECT * FROM clas;
-                SQL;
+            SQL;
+                break;
+        }
 
         try{
             $run = $this->pdb->prepare($query);
@@ -71,6 +87,7 @@ class clasManager implements CRUD
                 $t_clas->set_ident($row['Ident']);
                 $t_clas->set_nbEtud($etudManager->get_NbEtudByClasDB($row['PkClas']));
                 $t_clas->set_Pk($row['PkClas']);
+                $t_clas->set_etab($this->etabManager->get_etabName($row['FkEtab']));
                 $TClas[] = $t_clas;
             }
             return $TClas;
@@ -88,6 +105,7 @@ class clasManager implements CRUD
         $etudManager = new etudManager();
         $niv = $entity->get_niv();
         $ident = $entity->get_ident();
+        $etab = $this->etabManager->get_etabId($entity->get_etab());
         $PkClas = $entity->get_Pk();
         $nbEtud = $etudManager->get_NbEtudByClasDB($PkClas); //nécessaire pour qu'il y ait une modif en DB
 
@@ -190,6 +208,22 @@ class clasManager implements CRUD
         catch (PDOException $e)
         {
             throw new DbFailureRequestException("Classe : Erreur de récupération en DB", 24);
+        }
+    }
+
+    public function get_NbClasDB() //retourne le nombre d'étudiant dans une classe
+    {
+        $query = <<< SQL
+        SELECT Count(*) FROM Clas;
+        SQL;
+        try{
+            $run = $this->pdb->prepare($query);
+            $run->execute();
+            return $run->fetch()[0];
+        }
+        catch (PDOException $e)
+        {
+            throw new DbFailureRequestException("Classe - Erreur de récupération en DB", 21);
         }
     }
 }

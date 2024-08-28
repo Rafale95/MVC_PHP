@@ -143,5 +143,15 @@ class etud
         return $this->Pk;
     }
 
+    public function set_user($t_user)
+    {
+        $this->user = $t_user;
+    }
+
+    public function get_user()
+    {
+        return $this->user;
+    }
+
 
 }

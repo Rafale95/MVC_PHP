@@ -6,7 +6,6 @@ use ProjetExam\Exception\UnexpectedClassException;
 include_once('../../model/inscr.php');
 include_once ('dbManager.php');
 include_once ('CRUD.php');
-include_once ('../../exception/DeleteInscrWithTEndException.php');
 include_once ('etudManager.php');
 include_once ('eprManager.php');
 
@@ -122,7 +121,7 @@ class inscrManager implements CRUD
         }
         catch (PDOException $e)
         {
-            throw new DbFailureRequestException("Classe : Erreur de mise à jour en DB", 22);
+            throw new DbFailureRequestException("Inscription : Erreur de mise à jour en DB", 22);
         }
         return 0;
     }
@@ -152,7 +151,7 @@ class inscrManager implements CRUD
         }
         catch (PDOException $e)
         {
-            throw new DbFailureRequestException("Etudiant - Erreur de suppression en DB", 21);
+            throw new DbFailureRequestException("Inscription - Erreur de suppression en DB", 21);
         }
         catch (DeleteInscrWithTEndException $e)
         {

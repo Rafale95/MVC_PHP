@@ -25,6 +25,31 @@ include $_SERVER['DOCUMENT_ROOT'].'/ProjetExam/view/insert/header.php';
         ?>
 
         <div class="container text-left bg-light p-4 rounded custom_body_style" style="border: #0a53be 2px solid;">
+        <div class="table-responsive" style="display: flex;">
+        <table class="table table-md table-striped";">
+        <thead class="thead-light">
+        <tr>
+            <th scope = "col">Établissement</th>
+            <th scope = "col">Année Scolaire</th>
+            <th scope = "col">Nombre de classes</th>
+        </tr>
+        </thead>
+        <tbody class="table-group-divider" ">
+            <tr>
+                <td><?=$TEtab[0]->get_etab()?></td>
+                <td><?=$TEtab[0]->get_anSco()?></td>
+                <td><?=$TEtab[0]->get_NbClas()?></td>
+                <?php if($_SESSION['LogAdmin'] = 1 ) { ?>
+                <td><a href="/ProjetExam/controller/etab/update.php?id=etab<?=$TEtab[0]->get_Pk()?>" class="btn btn-primary btn-sm">Modifier</a></td>
+                <?php } ?>
+            </tr>
+
+        </tbody>
+        </table>
+        </div>
+        </div>
+        <div class="container text-left bg-light p-4 rounded custom_body_style" style="border: #0a53be 2px solid;">
+        <div class="table-responsive" style="display: flex;">
             <h2 class="mb-4">Statistiques</h2>
             <div class="table-responsive" style="display: flex;">
                 <table class="table table-md table-striped";">
@@ -66,7 +91,6 @@ include $_SERVER['DOCUMENT_ROOT'].'/ProjetExam/view/insert/header.php';
                 </tbody>
                 </table>
             </div>
-            <a href="/ProjetExam/controller/inscr/create.php" class="btn btn-success btn-sm">Ajouter une inscription</a>
         </div>
 
     </body>
