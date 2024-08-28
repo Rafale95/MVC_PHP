@@ -7,7 +7,7 @@ include_once '../../model/services/etudManager.php';
 try
 {
     $etudManager = new etudManager();
-    $TEtab = $etudManager->clasManager->get_ClasNames();
+    $TClas = $etudManager->clasManager->get_ClasNames();
 }
 catch (DbFailureRequestException $e)
 {

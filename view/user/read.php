@@ -1,5 +1,5 @@
 <?php
-$title = "Classes";
+$title = "Users";
 include $_SERVER['DOCUMENT_ROOT'].'/ProjetExam/view/insert/header.php';
 
 if (isset($_GET['error'])) {
@@ -37,7 +37,9 @@ include $_SERVER['DOCUMENT_ROOT'].'/ProjetExam/view/insert/menu.php';
                 <!-- Les données des users seront chargées ici -->
                 <tr>
                     <td><?=$t_user->get_login()?></td>
-                    <td><a href="/ProjetExam/controller/clas/update.php?id=class<?=$t_user->get_Pk()?>" class="btn btn-primary btn-sm">Modifier</a></td>
+                    <td>
+                        <a href="/ProjetExam/controller/user/update.php?id=user<?=$t_user->get_Pk()?>" class="btn btn-primary btn-sm">Modifier</a>
+                    </td>
                 </tr>
                 <?php
             }
@@ -47,13 +49,13 @@ include $_SERVER['DOCUMENT_ROOT'].'/ProjetExam/view/insert/menu.php';
         </table>
     </div>
     <?php if($_SESSION['LogAdmin'] = 1 ) { ?>
-    <a href="/ProjetExam/controller/clas/create.php" class="btn btn-success btn-sm">Ajouter une classe</a>
+    <a href="/ProjetExam/controller/user/createAdmin.php" class="btn btn-success btn-sm">Ajouter un utilisateur</a>
     <?php } ?>
 </div>
 </body>
 
 <?php
-$footer = "Classes";
+$footer = "Users";
 include $_SERVER['DOCUMENT_ROOT'].'/ProjetExam/view/insert/footer.php';
 ?>
 

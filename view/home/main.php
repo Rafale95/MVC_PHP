@@ -49,7 +49,6 @@ include $_SERVER['DOCUMENT_ROOT'].'/ProjetExam/view/insert/header.php';
         </div>
         </div>
         <div class="container text-left bg-light p-4 rounded custom_body_style" style="border: #0a53be 2px solid;">
-        <div class="table-responsive" style="display: flex;">
             <h2 class="mb-4">Statistiques</h2>
             <div class="table-responsive" style="display: flex;">
                 <table class="table table-md table-striped";">
@@ -69,7 +68,10 @@ include $_SERVER['DOCUMENT_ROOT'].'/ProjetExam/view/insert/header.php';
                 {
                     try {
                         //pourcentage d'absents basé sur le nombre d'étudiants et le nombre de participants
-                        $absents = (($etudCount-$t_epr->get_nbPart()) / $etudCount) * 100;
+                        if($etudCount == 0)
+                            $absents = 100;
+                        else
+                            $absents = (($etudCount-$t_epr->get_nbPart()) / $etudCount) * 100;
                         $rw = $inter_eprM->get_sumRwByEprDB($t_epr->get_Pk());
 
                     } catch (DbFailureRequestException $e) {
@@ -78,7 +80,7 @@ include $_SERVER['DOCUMENT_ROOT'].'/ProjetExam/view/insert/header.php';
                     }
                     ?>
                     <tr>
-                        <td><?=$t_epr->get_anSco()?></td>
+                        <td><?=$t_epr->get_Pk()+2?></td> <!-- +2 pour afficher les épreuves sans donner la primary key -->
                         <td><?=$t_epr->get_date()?></td>
                         <td><?= $absents?> %</td>
                         <td><?=$rw?> %</td>

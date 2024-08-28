@@ -257,7 +257,7 @@ class eprManager implements CRUD
         try{
             $run = $this->pdb->prepare($query);
             $run->execute();
-            return $run->fetch()[0][0];
+            return $run->fetch()[0];
         }
         catch (PDOException $e)
         {

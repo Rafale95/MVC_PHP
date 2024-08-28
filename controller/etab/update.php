@@ -9,8 +9,8 @@ $etabManager = new etabManager();
 if (isset($_POST['input_etab']) && isset($_GET['id'])) {
 
     $inter_etab = new etab();
-    $inter_etab->set_Etab(htmlspecialchars($_POST['input_niv']));
-    $inter_etab->set_AnSco(htmlspecialchars($_POST['input_ident']));
+    $inter_etab->set_Etab(htmlspecialchars($_POST['input_etab']));
+    $inter_etab->set_AnSco(htmlspecialchars($_POST['input_anSco']));
     $inter_etab->set_NbClas(0);
     $id = common::preg_matchId($_GET['id']);
     $inter_etab->set_Pk($id);

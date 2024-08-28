@@ -51,7 +51,7 @@ class userManager
         {
             $login = func_get_arg(0);
             $query = <<< SQL
-                SELECT * FROM user WHERE login='$login';
+                SELECT * FROM user WHERE PkUser='$login';
             SQL;
         }
         else
@@ -70,6 +70,7 @@ class userManager
             $t_user->set_login($row['Login']);
             $t_user->set_pswd($row['Pswd']);
             $t_user->set_admin($row['Admin']);
+            $t_user->set_Pk($row['PkUser']);
             $Tuser[] = $t_user;
         }
         return $Tuser;
@@ -82,11 +83,10 @@ class userManager
         $etudManager = new etudManager();
         $login = $entity->get_login();
         $pswd = password_hash($entity->get_pswd(), PASSWORD_DEFAULT);
-        $admin = $entity->get_admin();
         $PkUser = $entity->get_Pk();
 
         $query = <<< SQL
-            UPDATE user SET Login = '$login', Pswd = '$pswd', Admin = '$admin' 
+            UPDATE user SET Login = '$login', Pswd = '$pswd'
             WHERE PkUser = '$PkUser';
         SQL;
         try{
@@ -117,9 +117,9 @@ class userManager
         return false;
     }
 
-    public function checkAdmin($login, $pswd)
+    public function checkAdmin($login)
     {
-        $query = "SELECT * FROM user WHERE login='$login' and Pswd='$pswd' and Admin = 1";
+        $query = "SELECT * FROM user WHERE login='$login' and Admin = '1'";
         $run = $this->pDB->prepare($query);
         $run->execute();
         $result = $run->fetchAll();

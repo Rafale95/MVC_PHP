@@ -6,6 +6,7 @@ use ProjetExam\exception\DeleteClassWithStudentsException;
 include_once ('../../model/clas.php');
 include_once ('dbManager.php');
 include_once ('etudManager.php');
+include_once ('etabManager.php');
 
 include_once ('CRUD.php');
 
@@ -26,7 +27,7 @@ class clasManager implements CRUD
         if(!$entity instanceof clas) //sécu pour éviter une erreur de type de la part du dev
             throw new UnexpectedValueException(clas::class, get_class($entity));
 
-        $etab = (int) $this->etabManager->get_etabId($entity->get_etab());
+        $etab = (int) $this->etabManager->get_etabId();
         $niv = $entity->get_niv();
         $ident = $entity->get_ident();
         $nbEtud = 0;
@@ -87,7 +88,7 @@ class clasManager implements CRUD
                 $t_clas->set_ident($row['Ident']);
                 $t_clas->set_nbEtud($etudManager->get_NbEtudByClasDB($row['PkClas']));
                 $t_clas->set_Pk($row['PkClas']);
-                $t_clas->set_etab($this->etabManager->get_etabName($row['FkEtab']));
+                $t_clas->set_etab($this->etabManager->get_etabId());
                 $TClas[] = $t_clas;
             }
             return $TClas;
@@ -105,7 +106,7 @@ class clasManager implements CRUD
         $etudManager = new etudManager();
         $niv = $entity->get_niv();
         $ident = $entity->get_ident();
-        $etab = $this->etabManager->get_etabId($entity->get_etab());
+        $etab = $this->etabManager->get_etabId();
         $PkClas = $entity->get_Pk();
         $nbEtud = $etudManager->get_NbEtudByClasDB($PkClas); //nécessaire pour qu'il y ait une modif en DB
 

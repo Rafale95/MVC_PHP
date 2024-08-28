@@ -9,9 +9,8 @@ $userManager = new userManager();
 if (isset($_POST['input_login']) && isset($_GET['id'])) {
 
     $inter_user = new user();
-    $inter_user->set_login(htmlspecialchars($_POST['input_niv']));
-    $inter_user->set_pswd(htmlspecialchars($_POST['input_ident']));
-    $inter_user->set_admin(0);
+    $inter_user->set_login(htmlspecialchars($_POST['input_login']));
+    $inter_user->set_pswd(htmlspecialchars($_POST['input_pswd']));
     $id = common::preg_matchId($_GET['id']);
     $inter_user->set_Pk($id);
     try {
@@ -28,13 +27,13 @@ if (isset($_POST['input_login']) && isset($_GET['id'])) {
     }
 
 
-    header("Location: /ProjetExam/controller/clas/read.php");
+    header("Location: /ProjetExam/controller/user/read.php");
     unset($_GET['id']);
 }
 if (isset($_GET['id'])) {
     $id = common::preg_matchId($_GET['id']);
     try {
-        $TClas = $userManager->read($id)[0];
+        $TUser = $userManager->read($id)[0];
     }
     catch (DbFailureRequestException $e)
     {
@@ -42,7 +41,7 @@ if (isset($_GET['id'])) {
         exit();
     }
 } else {
-    header("Location: /ProjetExam/controller/clas/read.php");
+    header("Location: /ProjetExam/controller/user/read.php");
 }
 
-include '../../view/clas/update.php';
+include '../../view/user/update.php';

@@ -52,6 +52,11 @@ class clas
         $this->nbEtud = $t_nbEtud;
     }
 
+    public function get_nbEtud()
+    {
+        return $this->nbEtud;
+    }
+
     public function set_Pk($t_Pk)
     {
         $this->Pk = $t_Pk;

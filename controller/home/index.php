@@ -15,12 +15,13 @@ else
         if (isset($_POST['input_login'], $_POST['input_password']))
             if ($userManager->checkLoginPassword($_POST['input_login'], $_POST['input_password'])) //check si les paramètres de connexion sont valides
             {
-                if ($userManager->checkAdmin($_POST['input_login'], $_POST['input_password']))
+                if ($userManager->checkAdmin($_POST['input_login']))
                     $_SESSION['LogAdmin'] = 1;
                 else
                     $_SESSION['LogAdmin'] = 0;
 
                 $_SESSION['User'] = ($_POST['input_login']);
+                $_SESSION['LogOk'] = 1;
                 header("Location: /ProjetExam/controller/home/main.php");
             } else {
                 $_SESSION['LogOk'] = 0;

@@ -106,18 +106,13 @@ class etabManager
         return 0;
     }
 
-    public function get_etabId($etabName = null, $Pk = null)
+    public function get_etabId()
     {
 
         try{
-            if($Pk == null)
-                $query = <<< SQL
-                SELECT PkEtab FROM etab left join clas c on etab.PkEtab = c.FkEtab where Etab = '$etabName';
-                SQL;
-            else
-                $query = <<< SQL
-                SELECT PkEtab FROM etab left join clas c on etab.PkEtab = c.FkEtab where PkClas = '$Pk';
-                SQL;
+            $query = <<< SQL
+            SELECT PkEtab FROM etab 
+            SQL;
             $run = $this->pdb->prepare($query);
             $run->execute();
             return $run->fetchAll()[0][0]; // retourne la première colonne de la première ligne de résultat.
